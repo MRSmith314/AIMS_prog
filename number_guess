@@ -1,0 +1,46 @@
+import random
+
+#def play_guessing_game():
+number = random.randint(1,101)
+#low = 1
+#high = 100
+player_guess = 0
+computer_guess = 0
+max_attempts = 5
+attempts = 0
+print("Guessing the Number Game!")
+
+while max_attempts <= 5:
+    attempts += 1
+
+# Player's turn
+    player_guess = int(input("Guess a number between 1-100: "))
+    if player_guess < number:
+        print("Too Low!")
+        #low = max(low, player_guess + 1)
+    elif player_guess > number:
+        print("Too high!")
+        #high = min(high, player_guess -1)
+    else:
+        print("Congratulations! You guess it!")
+        #break
+
+# Computer's turn
+    computer_guess = random.randint(1,101)
+    print(f"Computer guesses this number: {computer_guess}")
+    if computer_guess < number:
+        print("Computer guess was too low!")
+        #low = computer_guess +1
+    elif computer_guess > number:
+        print("Computer Guess was too high!")
+        #high = computer_guess -1
+    else:
+        print("Computer guessed it!")
+        break
+
+
+    #while True:
+play_again = input("Would you like to play again? (y/n)")
+if play_again != "y":
+
+    print("Game Over!")
