@@ -1,0 +1,89 @@
+import random
+
+def main():
+  balance = 10
+  while balance > 0:
+    balance = play_round(balance)
+# Generates 3 white balls (1-9) and 1 Powerball (1-5)
+def generate_powerball_numbers():
+  white_balls = random.sample(range(1, 10), 3)
+  powerball = random.randint(1, 6)
+  return white_balls, powerball
+
+# Check how many numbers the user matched.
+def check_winning_numbers(user_picks, winning_numbers):
+  white_match = len((set(user_picks[0]) & set(winning_numbers[0])))
+  powerball_match = user_picks[1] == winning_numbers[1]
+  return white_match, powerball_match
+
+# Calculates winnings based on the number of matches.
+def calculate_winnings(matches, powerball_match):
+  if matches == 3 and powerball_match:
+    return 1000  # Jackpot
+  elif matches == 3:
+    return 100
+  elif matches == 2 and powerball_match:
+    return 20
+  elif matches == 2:
+    return 10
+  elif matches == 1 and powerball_match:
+    return 4
+  elif matches == 1:
+    return 2
+  else:
+    return 0
+
+def play_round(balance):
+  print(f"Your current balance: ${balance}")
+  bet = 2
+  if balance < bet:
+    print("Insufficient funds. Game over.")
+    return 0
+
+  balance -= bet
+  print(f"You bet ${bet}.")
+
+  user_picks = []
+  print("Pick 3 numbers between 1 and 9:")
+  for _ in range(3):
+    while True:
+      try:
+        num = int(input())
+        if 1 <= num <= 9 and num not in user_picks:
+          user_picks.append(num)
+          break
+        else:
+          print("Invalid number. Please enter a number between 1 and 69.")
+      except ValueError:
+        print("Invalid input. Please enter a number.")
+
+  print("Pick a Powerball number between 1 and 5:")
+  while True:
+    try:
+      powerball = int(input())
+      if 1 <= powerball <= 5:
+        user_picks.append(powerball)
+        break
+      else:
+        print("Invalid number. Please enter a number between 1 and 26.")
+    except ValueError:
+      print("Invalid input. Please enter a number.")
+
+  winning_numbers = generate_powerball_numbers()
+  print(f"Winning numbers: {winning_numbers[0]}, Powerball: {winning_numbers[1]}")
+
+  matches, powerball_match = check_winning_numbers(user_picks, winning_numbers)
+  winnings = calculate_winnings(matches, powerball_match)
+  balance += winnings
+
+  if winnings > 0:
+    print(f"Congratulations! You won ${winnings}!")
+  else:
+    print("Sorry, you didn't win this time.")
+
+  return balance
+
+  print("Game over. Your final balance is $0.")
+
+if __name__ == "__main__":
+  main()
